@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+@theme {
+  --animate-marquee-rtl: marquee-rtl 90s linear infinite;
+
+  @keyframes marquee-rtl {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+@keyframes marquee-rtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-rtl {
+  animation: marquee-rtl 90s linear infinite;
+}
+
+.marquee-rtl:hover {
+  animation-play-state: paused;
+}
+
+/* *{
+    color:black;
+    background-color: white;
+} */
+
