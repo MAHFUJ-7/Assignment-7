@@ -1,15 +1,22 @@
 import Link from 'next/link';
 import React from 'react'
+import { notFound } from 'next/navigation';
 const fetchProductDetails = async (id) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${id}`);
+    if (!res.ok) {
+        return null;
+    }
     const data = await res.json();
-    return data;
+    return data && typeof data === 'object' ? data : null;
 }
 
 const ProductDetailsPage = async ({ params }) => {
     const { id } = await params;
     const product = await fetchProductDetails(id);
     console.log('Product details:', product);
+    if (!product || !Array.isArray(product.markets) || product.markets.length === 0) {
+        notFound();
+    }
 
     const minPrice = product.markets.reduce((min, market) => {
         return market.min < min ? market.min : min;

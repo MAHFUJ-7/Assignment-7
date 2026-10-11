@@ -1,13 +1,17 @@
 import React from 'react'
 import { Label, ListBox, Select } from "@heroui/react";
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import ProductDetailsPage from '@/app/productDetails/[id]/page';
 import ProductList from './ProductList';
 
 const fetchCategory = async (category) => {
   const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products?category=${category}`);
+  if (!res.ok) {
+    return [];
+  }
   const data = await res.json();
-  return data;
+  return Array.isArray(data) ? data : [];
 }
 
 
@@ -15,6 +19,9 @@ const cateGoryWise = async ({ params }) => {
   const { id } = await params;
   const categoryData = await fetchCategory(id);
   console.log(categoryData);
+  if (categoryData.length === 0) {
+    notFound();
+  }
 
   return (
     <div>
