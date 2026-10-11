@@ -11,8 +11,8 @@ import {
     TextField,
     toast,
 } from "@heroui/react";
-import { signUp } from "@/lib/auth-client";
 import Link from "next/link";
+import { signUp, signIn } from "@/lib/auth-client";
 
 export default function Basic() {
     const onSubmit = async (e) => {
@@ -30,7 +30,7 @@ export default function Basic() {
     };
 
     const handleSignUnGoogle = async () => {
-        const data = await signUp.social({
+        const data = await signIn.social({
             provider: "google",
         })
     }
@@ -65,7 +65,6 @@ export default function Basic() {
                         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
                             return "অনুগ্রহ করে একটি সঠিক ইমেল ঠিকানা লিখুন।";
                         }
-
                         return null;
                     }}
                 >

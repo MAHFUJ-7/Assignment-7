@@ -6,6 +6,11 @@ const client = new MongoClient(process.env.BETTER_AUTH_DATABASE_URL);
 const db = client.db("better-auth-a-7");
 
 export const auth = betterAuth({
+    baseURL: process.env.BETTER_AUTH_BASE_URL,
+    trustedOrigins: [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+  ],
     emailAndPassword: {
      enabled: true,
     },

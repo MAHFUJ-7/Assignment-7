@@ -24,12 +24,16 @@ const SignInPage = () => {
         )
 
         // Perform your sign-in logic here, e.g., send data to your API
-        const { data: resData, error } = await signIn.email({
-            email: data.email,
-            password: data.password,
+        const { error } = await signIn.email({
+            email: String(data.email),
+            password: String(data.password),
             rememberMe: true,
-            callbackURL: "/",
         })
+
+        if (error) {
+            return;
+        }
+
         router.push("/");
         router.refresh();
     };
