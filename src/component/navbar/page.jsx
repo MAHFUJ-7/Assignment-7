@@ -33,7 +33,6 @@ const NavbarPage = async () => {
   headers: await headers(),
 })
 
-  console.log('Session data:', session); // Log the session data to check if it's being retrieved correctly
   
 
   const today = new Intl.DateTimeFormat("bn-BD", {

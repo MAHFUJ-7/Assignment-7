@@ -13,7 +13,6 @@ const fetchProductDetails = async (id) => {
 const ProductDetailsPage = async ({ params }) => {
     const { id } = await params;
     const product = await fetchProductDetails(id);
-    console.log('Product details:', product);
     if (!product || !Array.isArray(product.markets) || product.markets.length === 0) {
         notFound();
     }

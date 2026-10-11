@@ -18,7 +18,6 @@ const fetchCategory = async (category) => {
 const cateGoryWise = async ({ params }) => {
   const { id } = await params;
   const categoryData = await fetchCategory(id);
-  console.log(categoryData);
   if (categoryData.length === 0) {
     notFound();
   }

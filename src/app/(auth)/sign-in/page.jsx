@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
 import {
     Button,
     Description,
@@ -10,6 +11,7 @@ import {
     Label,
     TextField,
 } from "@heroui/react";
+import Link from "next/link";
 
 const SignInPage = () => {
     const router = useRouter();
@@ -20,7 +22,6 @@ const SignInPage = () => {
         const data = Object.fromEntries(
             formData.entries(),
         )
-        console.log(data);
 
         // Perform your sign-in logic here, e.g., send data to your API
         const { data: resData, error } = await signIn.email({
@@ -31,18 +32,23 @@ const SignInPage = () => {
         })
         router.push("/");
         router.refresh();
-        console.log('Sign-in result:', resData, error);
     };
+
+    const handleSignInGoogle = async () => {
+        const data = await signIn.social({
+            provider: "google",
+        })
+    }
 
 
     return (
         <div className="flex  flex-col items-center text-starts p-3 justify-center gap-4 bg-gray-100 text-foreground">
             <h1 className="text-2xl font-bold">সাইন ইন</h1>
             <p>বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।</p>
-            <Form 
-            className="flex w-96 flex-col gap-4 content-center bg-[#e7e9e3] p-5 rounded-[10px]"
-             onSubmit={onSubmit}
-             >
+            <Form
+                className="flex w-96 flex-col gap-4 content-center bg-[#e7e9e3] p-5 rounded-[10px]"
+                onSubmit={onSubmit}
+            >
                 <TextField
                     isRequired
                     name="email"
@@ -83,6 +89,16 @@ const SignInPage = () => {
 
                 </div>
             </Form>
+            <p></p>
+            <Button onClick={handleSignInGoogle} className="flex items-center justify-center gap-2">
+                <FcGoogle />
+                Google দিয়ে চালিয়ে যান
+            </Button>
+            
+            <div>
+                <h1>অ্যাকাউন্ট নেই? <Link href="/sign-up" className="text-blue-500 hover:underline">সাইন আপ করুন</Link></h1>
+            </div>
+
         </div>
     );
 };

@@ -11,7 +11,6 @@ const UpdateProfile = () => {
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
 
-        console.log(data);
         // Do something with the form data, e.g., submit it to a server
     const { data: resData, error } = await updateUser({
             name: data.name,
@@ -22,7 +21,6 @@ const UpdateProfile = () => {
         } else {
             toast.success("প্রোফাইল আপডেট করা হয়েছে।");
         }
-        console.log('Sign-up result:', resData, error);
     };
 
     return (

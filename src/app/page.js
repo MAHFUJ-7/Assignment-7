@@ -10,7 +10,6 @@ const productdata = async () => {
 
 const page = async () => {
   const data = await productdata();
-  // console.log(data);
 
   let todayIncrease = data.filter((item) => {
     return item.change.dir === "up";
@@ -19,7 +18,6 @@ const page = async () => {
   const todayDecrease = data.filter((item) => {
     return item.change.dir === "down";
   }).sort((a, b) => a.change.pct - b.change.pct).slice(0, 6);
-  console.log(todayDecrease);
   return (
     <div className=" container max-auto m-2 p-5 bg-[#f6f5ed] rounded-[10px]">
       <HeroSection />

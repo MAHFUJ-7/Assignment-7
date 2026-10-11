@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import {
     Button,
     Description,
@@ -11,6 +12,7 @@ import {
     toast,
 } from "@heroui/react";
 import { signUp } from "@/lib/auth-client";
+import Link from "next/link";
 
 export default function Basic() {
     const onSubmit = async (e) => {
@@ -18,7 +20,6 @@ export default function Basic() {
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
 
-        console.log(data);
         // Do something with the form data, e.g., submit it to a server
         const { data: resData, error } = await signUp.email({
             name: String(data.name),
@@ -26,8 +27,13 @@ export default function Basic() {
             password: String(data.password)
         });
         toast.success("অ্যাকাউন্ট তৈরি করা হয়েছে। অনুগ্রহ করে লগইন করুন।");
-        console.log('Sign-up result:', resData, error);
     };
+
+    const handleSignUnGoogle = async () => {
+        const data = await signUp.social({
+            provider: "google",
+        })
+    }
 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -118,6 +124,16 @@ export default function Basic() {
                     </Button>
                 </div>
             </Form>
+
+            <Button onClick={handleSignUnGoogle} className="flex items-center justify-center gap-2">
+                <FcGoogle />
+                Google দিয়ে চালিয়ে যান
+            </Button>
+
+            <div>
+                <h1>অ্যাকাউন্ট আছে? <Link href="/sign-in" className="text-blue-500 hover:underline">সাইন ইন করুন</Link></h1>
+            </div>
+
         </div>
     );
 }
