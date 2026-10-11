@@ -8,6 +8,7 @@ import {
     Input,
     Label,
     TextField,
+    toast,
 } from "@heroui/react";
 import { signUp } from "@/lib/auth-client";
 
@@ -24,8 +25,8 @@ export default function Basic() {
             email: String(data.email),
             password: String(data.password)
         });
-        console.log('after signup:', resData, error);
-
+        toast.success("অ্যাকাউন্ট তৈরি করা হয়েছে। অনুগ্রহ করে লগইন করুন।");
+        console.log('Sign-up result:', resData, error);
     };
 
     const [password, setPassword] = useState("");

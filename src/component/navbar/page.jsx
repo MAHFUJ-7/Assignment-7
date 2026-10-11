@@ -1,10 +1,13 @@
-
 import React from 'react'
 import Image from 'next/image'
 import image from '@/assets/logo-icon.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+import UserNav from '../userNav/page'
+
 const data = async () => {
   const res = await fetch('https://openapi.programming-hero.com/api/bazardor/categories');
   const data = await res.json();
@@ -23,6 +26,15 @@ const NavbarPage = async () => {
   const allCategories = await data();
 
   const allProducts = await productdata();
+
+  // const { data: session } = await authClient.getSession();
+
+  const session = await auth.api.getSession({
+  headers: await headers(),
+})
+
+  console.log('Session data:', session); // Log the session data to check if it's being retrieved correctly
+  
 
   const today = new Intl.DateTimeFormat("bn-BD", {
     weekday: "long",
@@ -47,12 +59,20 @@ const NavbarPage = async () => {
             </div>
           </Link>
           <div className="flex gap-4 items-center">
-            <Link href={"/sign-in"}>
-              সাইন ইন
-            </Link>
-            <Link href={"/sign-up"}>
-              <button className="bg-green-400 rounded-[10px] p-3">সাইন আপ</button>
-            </Link>
+            {
+              session?.user ? 
+              <>
+                <UserNav session={session} />
+              </> :
+                <>
+                  <Link href={"/sign-in"}>
+                    সাইন ইন
+                  </Link>
+                  <Link href={"/sign-up"}>
+                    <button className="bg-green-400 rounded-[10px] p-3">সাইন আপ</button>
+                  </Link>
+                </>
+            }
           </div>
         </div>
         <div className="flex gap-4 overflow-x-auto">

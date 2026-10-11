@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
 import {
     Button,
@@ -11,7 +11,8 @@ import {
     TextField,
 } from "@heroui/react";
 
-const signInPage = () => {
+const SignInPage = () => {
+    const router = useRouter();
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -26,7 +27,10 @@ const signInPage = () => {
             email: data.email,
             password: data.password,
             rememberMe: true,
+            callbackURL: "/",
         })
+        router.push("/");
+        router.refresh();
         console.log('Sign-in result:', resData, error);
     };
 
@@ -83,4 +87,4 @@ const signInPage = () => {
     );
 };
 
-export default signInPage;
+export default SignInPage;
