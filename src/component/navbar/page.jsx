@@ -9,14 +9,22 @@ import { auth } from "@/lib/auth";
 import UserNav from '../userNav/page'
 import CategoryNav from '../categoryNav/page'
 const data = async () => {
-  const res = await fetch('https://openapi.programming-hero.com/api/bazardor/categories');
+  const res = await fetch('https://openapi.programming-hero.com/api/bazardor/categories', {
+    next: { revalidate: 300 },
+  });
+  if (!res.ok) throw new Error(`Category API request failed with status ${res.status}`);
   const data = await res.json();
+  if (!Array.isArray(data)) throw new Error("Category API returned an invalid response");
   return data;
 }
 
 const productdata = async () => {
-  const res = await fetch('https://openapi.programming-hero.com/api/bazardor/products');
+  const res = await fetch('https://openapi.programming-hero.com/api/bazardor/products', {
+    next: { revalidate: 300 },
+  });
+  if (!res.ok) throw new Error(`Product API request failed with status ${res.status}`);
   const data = await res.json();
+  if (!Array.isArray(data)) throw new Error("Product API returned an invalid response");
   return data;
 }
 

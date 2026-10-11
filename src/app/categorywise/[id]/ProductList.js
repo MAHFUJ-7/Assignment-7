@@ -62,7 +62,7 @@ export default function ProductList({ products }) {
       <div className="gap-4 overflow-x-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {sorted.map((item) => (
           <div key={item.id} className="gap-4 bg-amber-50 p-4 rounded-lg border">
-            <Link href={`/productDetails/${item.id}`}>
+            <Link href={`/product/${item.slug}`}>
               <div className="flex gap-4 items-center">
                 <h1 className="text-2xl bg-gray-400 rounded-[10px] p-2">{item.image}</h1>
                 <div>

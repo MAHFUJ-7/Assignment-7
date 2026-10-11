@@ -16,8 +16,9 @@ export async function proxy(request) {
 export const config = {
   matcher: [
      "/productDetails/:path*",
-    "/categorywise/:path*",
+    "/product/:path*",
     "/myProfile/:path*",
+    "/profile/:path*",
     
    ], // Specify the routes the middleware applies to
 };

@@ -1,12 +1,11 @@
 import React from 'react'
-import { Label, ListBox, Select } from "@heroui/react";
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import ProductDetailsPage from '@/app/productDetails/[id]/page';
 import ProductList from './ProductList';
 
 const fetchCategory = async (category) => {
-  const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products?category=${category}`);
+  const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products?category=${encodeURIComponent(category)}`, {
+    next: { revalidate: 300 },
+  });
   if (!res.ok) {
     return [];
   }

@@ -26,14 +26,19 @@ export default function Basic() {
             email: String(data.email),
             password: String(data.password)
         });
+        if (error) {
+            toast.error(error.message || "অ্যাকাউন্ট তৈরি করা যায়নি।");
+            return;
+        }
         toast.success("অ্যাকাউন্ট তৈরি করা হয়েছে। অনুগ্রহ করে লগইন করুন।");
     };
 
     const handleSignUnGoogle = async () => {
-        const data = await signIn.social({
+        const { error } = await signIn.social({
             provider: "google",
             callbackURL: "/",
-        })
+        });
+        if (error) toast.error(error.message || "Google দিয়ে সাইন আপ করা যায়নি।");
     }
 
     const [password, setPassword] = useState("");
@@ -44,7 +49,7 @@ export default function Basic() {
             <h1 className="text-2xl font-bold">অ্যাকাউন্ট তৈরি করুন</h1>
             <p>বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।</p>
             <Form
-                className="flex w-96 flex-col gap-4 content-center bg-[#e7e9e3] p-5 rounded-[10px]"
+                className="flex w-full max-w-md flex-col gap-4 content-center bg-[#e7e9e3] p-5 rounded-[10px]"
                 onSubmit={onSubmit}
             >
                 <TextField

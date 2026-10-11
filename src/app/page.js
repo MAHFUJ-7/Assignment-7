@@ -3,8 +3,16 @@ import Link from 'next/link'
 import HeroSection from '@/component/herosection/page.js'
 
 const productdata = async () => {
-  const res = await fetch('https://openapi.programming-hero.com/api/bazardor/products');
+  const res = await fetch('https://openapi.programming-hero.com/api/bazardor/products', {
+    next: { revalidate: 300 },
+  });
+  if (!res.ok) {
+    throw new Error(`Product API request failed with status ${res.status}`);
+  }
   const data = await res.json();
+  if (!Array.isArray(data)) {
+    throw new Error("Product API returned an invalid response");
+  }
   return data;
 }
 
@@ -27,7 +35,7 @@ const page = async () => {
         <div className=" gap-4 overflow-x-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {todayIncrease.map((item) => (
             <div key={item.id} className=" gap-4 bg-amber-50 p-4 rounded-lg border">
-              <Link href={`/productDetails/${item.id}`}>
+              <Link href={`/product/${item.slug}`}>
                 <div className="flex gap-4 items-center">
                   <h1 className="text-2xl bg-gray-400 rounded-[10px] p-2">{item.image}</h1>
                   <div>
@@ -50,7 +58,7 @@ const page = async () => {
         <div className=" gap-4 overflow-x-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {todayDecrease.map((item) => (
             <div key={item.id} className=" gap-4 bg-amber-50 p-4 rounded-lg border">
-              <Link href={`/productDetails/${item.id}`}>
+              <Link href={`/product/${item.slug}`}>
                 <div className="flex gap-4 items-center">
                   <h1 className="text-2xl bg-gray-400 rounded-[10px] p-2">{item.image}</h1>
                   <div>
@@ -75,7 +83,7 @@ const page = async () => {
         <div className=" gap-4 overflow-x-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {data.map((item) => (
             <div key={item.id} className=" gap-4 bg-amber-50 p-4 rounded-lg border">
-              <Link href={`/productDetails/${item.id}`}>
+              <Link href={`/product/${item.slug}`}>
                 <div className="flex gap-4 items-center">
                   <h1 className="text-2xl bg-gray-400 rounded-[10px] p-2">{item.image}</h1>
                   <div>

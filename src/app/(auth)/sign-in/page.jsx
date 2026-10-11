@@ -12,6 +12,7 @@ import {
     TextField,
 } from "@heroui/react";
 import Link from "next/link";
+import { toast } from "@heroui/react";
 
 const SignInPage = () => {
     const router = useRouter();
@@ -31,6 +32,7 @@ const SignInPage = () => {
         })
 
         if (error) {
+            toast.error(error.message || "ইমেইল বা পাসওয়ার্ড সঠিক নয়।");
             return;
         }
 
@@ -39,19 +41,19 @@ const SignInPage = () => {
     };
 
     const handleSignInGoogle = async () => {
-        const data = await signIn.social({
+        const { error } = await signIn.social({
             provider: "google",
             callbackURL: "/",
-        })
+        });
+        if (error) toast.error(error.message || "Google দিয়ে সাইন ইন করা যায়নি।");
     }
-
 
     return (
         <div className="flex  flex-col items-center text-starts p-3 justify-center gap-4 bg-gray-100 text-foreground">
             <h1 className="text-2xl font-bold">সাইন ইন</h1>
             <p>বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।</p>
             <Form
-                className="flex w-96 flex-col gap-4 content-center bg-[#e7e9e3] p-5 rounded-[10px]"
+                className="flex w-full max-w-md flex-col gap-4 content-center bg-[#e7e9e3] p-5 rounded-[10px]"
                 onSubmit={onSubmit}
             >
                 <TextField

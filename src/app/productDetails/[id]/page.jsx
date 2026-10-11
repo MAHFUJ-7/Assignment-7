@@ -10,9 +10,7 @@ const fetchProductDetails = async (id) => {
     return data && typeof data === 'object' ? data : null;
 }
 
-const ProductDetailsPage = async ({ params }) => {
-    const { id } = await params;
-    const product = await fetchProductDetails(id);
+export function ProductDetailsView({ product }) {
     if (!product || !Array.isArray(product.markets) || product.markets.length === 0) {
         notFound();
     }
@@ -56,7 +54,7 @@ const ProductDetailsPage = async ({ params }) => {
             <div className="flex flex-col gap-4 m-3 p-4 bg-[#f5f6f0] justify-between rounded-[10px] border">
                 <div>
                     <h1 className='text-1.5xl font-bold px-4'>দামের সারসংক্ষেপ</h1>
-                    <div className="flex gap-4 m-3 p-4 justify-between rounded-[10px] border">
+                    <div className="grid grid-cols-1 gap-4 m-3 p-4 justify-between rounded-[10px] border md:grid-cols-3">
                         <div className="flex flex-col gap-1 border p-4 rounded-[10px] w-full bg-gray-100">
                             <h2>সর্বনিম্ন দাম</h2>
                             <h3 className="text-green-500 font-bold ">{Number(minPrice).toLocaleString("bn-BD")} টাকা</h3>
@@ -78,9 +76,9 @@ const ProductDetailsPage = async ({ params }) => {
 
                 <div>
                     <h1 className='text-1.5xl font-bold px-4'>বাজার অনুযায়ী দাম</h1>
-                    <div className="m-3 border rounded-[10px] overflow-hidden">
+                    <div className="m-3 border rounded-[10px] overflow-x-auto">
                         {/* Header Row */}
-                        <div className="grid grid-cols-5 gap-2 p-4 bg-gray-200 font-bold text-gray-700 text-sm md:text-base">
+                        <div className="grid min-w-[720px] grid-cols-5 gap-2 p-4 bg-gray-200 font-bold text-gray-700 text-sm md:text-base">
                             <h2>বাজার</h2>
                             <h2>বিভাগ</h2>
                             <h2>সর্বনিম্ন</h2>
@@ -95,7 +93,7 @@ const ProductDetailsPage = async ({ params }) => {
                                 return (
                                     <div
                                         key={index}
-                                        className={`grid grid-cols-5 gap-2 p-4 items-center text-sm md:text-base border-b border-gray-100 last:border-none ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                                        className={`grid min-w-[720px] grid-cols-5 gap-2 p-4 items-center text-sm md:text-base border-b border-gray-100 last:border-none ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
                                             }`}
                                     >
                                         <h2 className="font-semibold text-gray-800">{market.market}</h2>
@@ -115,4 +113,13 @@ const ProductDetailsPage = async ({ params }) => {
     )
 }
 
-export default ProductDetailsPage
+const ProductDetailsPage = async ({ params }) => {
+    const { id } = await params;
+    const product = await fetchProductDetails(id);
+    if (!product || !Array.isArray(product.markets) || product.markets.length === 0) {
+        notFound();
+    }
+    return <ProductDetailsView product={product} />;
+}
+
+export default ProductDetailsPage;

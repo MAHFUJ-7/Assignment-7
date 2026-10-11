@@ -1,10 +1,8 @@
 import React from 'react'
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-import { Button } from '@heroui/react';
-import { signOut } from '@/lib/auth-client';
 import { LogOut } from './logOut';
-import UpdateProfile from './update';
+import Link from 'next/link';
 
 
 const myProfile = async () => {
@@ -29,7 +27,9 @@ const myProfile = async () => {
       </div>
 
       <div className="flex flex-col gap-4 p-4 bg-[#daedda] rounded-lg mt-3 mx-0 md:mx-4 lg:mx-8">
-        <UpdateProfile />
+        <Link href="/profile/update" className="w-fit rounded-lg bg-green-500 px-4 py-2 text-white">
+          তথ্য আপডেট করুন
+        </Link>
         
       </div>
     </div>
