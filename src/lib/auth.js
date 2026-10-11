@@ -13,10 +13,11 @@ export const auth = betterAuth({
         "https://assignment-7-sage-six.vercel.app",
     ],
     account: {
-		accountLinking: {
-			enabled: true, // Enable linking
-			trustedProviders: ["google"], // Mark providers as trusted
-		},
+        accountLinking: {
+            enabled: true,
+            trustedProviders: ["email-password", "google"],
+            requireLocalEmailVerified: false,
+        },
 	},
 
     emailAndPassword: {
