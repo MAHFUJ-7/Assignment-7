@@ -6,11 +6,19 @@ const client = new MongoClient(process.env.BETTER_AUTH_DATABASE_URL);
 const db = client.db("better-auth-a-7");
 
 export const auth = betterAuth({
-    baseURL: process.env.BETTER_AUTH_BASE_URL,
+    baseURL: process.env.BETTER_AUTH_URL,
     trustedOrigins: [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-  ],
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://assignment-7-sage-six.vercel.app",
+    ],
+    account: {
+		accountLinking: {
+			enabled: true, // Enable linking
+			trustedProviders: ["google"], // Mark providers as trusted
+		},
+	},
+
     emailAndPassword: {
      enabled: true,
     },

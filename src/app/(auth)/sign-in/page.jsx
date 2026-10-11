@@ -41,6 +41,7 @@ const SignInPage = () => {
     const handleSignInGoogle = async () => {
         const data = await signIn.social({
             provider: "google",
+            callbackURL: "/",
         })
     }
 

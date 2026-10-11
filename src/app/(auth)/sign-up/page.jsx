@@ -32,6 +32,7 @@ export default function Basic() {
     const handleSignUnGoogle = async () => {
         const data = await signIn.social({
             provider: "google",
+            callbackURL: "/",
         })
     }
 
