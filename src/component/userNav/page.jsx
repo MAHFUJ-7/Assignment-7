@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import { signOut } from '@/lib/auth-client';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 export default function UserNav({ session }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,15 +22,6 @@ export default function UserNav({ session }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSignOut = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          router.refresh();
-        },
-      },
-    });
-  };
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -47,19 +41,18 @@ export default function UserNav({ session }) {
           </div>
           <div className="flex flex-col gap-2">
             <Link 
-              href="/profile" 
+              href="/myProfile" 
               onClick={() => setIsOpen(false)}
               className="w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 rounded-lg text-sm font-medium transition-colors"
             >
               আমার প্রোফাইল
             </Link>
             <button 
-              onClick={() => {
-                setIsOpen(false);
-                handleSignOut();
+              onClick={() => { signOut(); router.push("/"); router.refresh();
               }}
               className="w-full text-center bg-red-50 hover:bg-red-100 text-red-600 py-2 rounded-lg text-sm font-medium transition-colors"
             >
+              <FontAwesomeIcon icon={faRightFromBracket} style={{ color: "rgb(251, 8, 8)" }} />
               লগআউট
             </button>
           </div>

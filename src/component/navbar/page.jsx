@@ -77,7 +77,7 @@ const NavbarPage = async () => {
         </div>
         <div className="flex gap-4 overflow-x-auto">
           {allCategories.map((Category) => (
-            <div key={Category.category} className="p-1 ">
+            <div key={Category.id} className="p-1 ">
               <Link href={`/categorywise/${Category.slug}`} className="flex gap-2 items-center">
                 <span>{Category.icon}</span>
                 <span>{Category.nameBn}</span>
