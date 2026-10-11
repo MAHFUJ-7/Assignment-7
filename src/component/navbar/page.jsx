@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import UserNav from '../userNav/page'
-
+import CategoryNav from '../categoryNav/page'
 const data = async () => {
   const res = await fetch('https://openapi.programming-hero.com/api/bazardor/categories');
   const data = await res.json();
@@ -75,7 +75,7 @@ const NavbarPage = async () => {
             }
           </div>
         </div>
-        <div className="flex gap-4 overflow-x-auto">
+        {/* <div className="flex gap-4 overflow-x-auto">
           {allCategories.map((Category) => (
             <div key={Category.id} className="p-1 ">
               <Link href={`/categorywise/${Category.slug}`} className="flex gap-2 items-center">
@@ -84,7 +84,8 @@ const NavbarPage = async () => {
               </Link>
             </div>
           ))}
-        </div>
+        </div> */}
+        <CategoryNav categories={allCategories} />
       </div>
 
       <div className="w-full overflow-hidden bg-white border-y">
